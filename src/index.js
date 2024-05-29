@@ -2,6 +2,7 @@
 
 import dotenv from "dotenv"
 import connectDB from "./database/index.js";
+import { app } from "./app.js";
 
 dotenv.config(
     {
@@ -9,7 +10,22 @@ dotenv.config(
     }
 )
 
-connectDB();
+connectDB()
+    .then(() => {
+        try {
+            const port = process.env.PORT || 8000;
+
+            app.listen(port, () => {
+                console.log(`server is listening on port ${port}`);
+            })
+        } catch (error) {
+            console.log(`500 Internal server error :: ${error}`);
+            throw error;
+        }
+    })
+    .catch((error) => {
+        console.log(`Database Connection Failed :: ${error}`);
+    })
 
 
 
