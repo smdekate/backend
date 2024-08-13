@@ -4,7 +4,6 @@ import express from 'express'
 import cors from 'cors'
 
 const app = express()
-app.use(cors())
 const port = process.env.PORT || 3000
 
 // // CORS whitelist setup
@@ -23,7 +22,7 @@ app.get('/', (req, res) => {
     res.send('home page')
 })
 
-app.get('/api/jokes', (req, res, next) => {
+app.get('/api/jokes', cors(), (req, res, next) => {
     const jokes = [
         {
             id: 1,
