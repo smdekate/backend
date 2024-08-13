@@ -4,25 +4,26 @@ import express from 'express'
 import cors from 'cors'
 
 const app = express()
+app.use(cors())
 const port = process.env.PORT || 3000
 
-// CORS whitelist setup
-var whitelist = ['http://localhost:3000', 'https://backend-sbt7.onrender.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// // CORS whitelist setup
+// var whitelist = ['http://localhost:3000', 'https://backend-sbt7.onrender.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 
 app.get('/', (req, res) => {
     res.send('home page')
 })
 
-app.get('/api/jokes', cors(corsOptions), (req, res) => {
+app.get('/api/jokes', (req, res, next) => {
     const jokes = [
         {
             id: 1,
